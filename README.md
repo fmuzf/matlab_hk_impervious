@@ -1,8 +1,8 @@
 MultiRun
 ==========
 
-A tool for running the Hock Melt models with various configurations
-from a base config file.
+A Matlab tool for facilitating parameter calibration of detim/debam.
+
 
 v 0.0.7
 -------
