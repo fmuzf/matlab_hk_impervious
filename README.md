@@ -129,18 +129,34 @@ configuration, delete ```runstatus.lock``` before doing so.
 #### Model Performance
 In addition, the ```outpath``` folder specified in your base ```input.txt```
 will contain a  tab-seperated file ```multi_performance.txt```.
-This file contains a summary of model performance statistics, changes made
+This file contains a summary of model performance statistics and the changes made
 to the base ```input.txt```.  Additionally, the SHA-1 hash, which determines the
-output folder for that specific run, is listes so that the outout of any particular
+output folder for that specific run, is listed so that the outout of any particular
 model run can be easily found.
+
  ```multi_performance.txt``` can then be used to extract the best parameter configuration(s) based
  on the multi-criteria performance statistics. The user should try to maximize r2-values for discharge and/or
  point balances, and minimize the discharge difference and/or the point balance RMSE. In addition,
  modeled total balance is given and can be compared with measured total balance over the entire simulation period
  (e.g. from geodetic methods), if available. The final choice of parameter configurations may be subjective
  in case of ambiguous model performance for different criteria.
+ 
+ The performance variables are (order of columns in file):
+  ```massbal_r2```: coefficient of determination between measured and modeled point mass balances
+  ```massbal_rmse```: root mean square error between measured and modeled point mass balances
+  ```Q_R2```: Nash-Sutcliffe coefficient indicating agreement between measured and modeled discharge (-infinity to 1)
+  ```Q_lnR2```: same but using logarithmic discharge (to evaluate agreement during low-flow conditions
+  ```Qvolumesim```: Total simulated discharge volume in 100,000 m3 over simulation period
+  ```Qvolumemeas```: Total measured discharge volume in 100,000 m3 over simulation period (only time steps with valid data)
+  ```nsteps```: number of time steps simulated
+  ```nstepsdis```: number of time steps of nsteps that contain valid discharge data.
+  Note if any of the variables are not available (for example, if you don't have discharge data, MultiRun will fill those columns with -9999, i.e. the
+  order of variables in the output file remains constant no matter available observations.
+  ```totalglacierwidemassbalance(m)```: total mass balance over the entire glacier over the entire simulation period.
+  The following columns give the values of the parameters chosen to vary with MultiRun.
 
-In Matlab, ```modelMultiRun``` has returned quite a bit of information to you
+
+In Matlab, ```modelMultiRun``` has returned quite a bit of additional information to you
 which you can use to further manipulate your finished runs. These are outlined
 in the API below.
 
